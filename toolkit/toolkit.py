@@ -22,7 +22,7 @@ import os
 TOOLKIT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, TOOLKIT_DIR)
 
-from commands import generate, monitor, corrupt, replicate, schema, restore, status
+from commands import generate, monitor, corrupt, replicate, schema, restore, status, transaction
 
 
 COMMANDS = {
@@ -33,6 +33,7 @@ COMMANDS = {
     'replicate': replicate.run,
     'schema-change': schema.run,
     'restore': restore.run,
+    'transaction': transaction.run,
 }
 
 
@@ -72,6 +73,13 @@ Commands:
                     --list          List available backups
                     --file FILE     Specific backup to restore
                     --all           Restore all backups
+
+  transaction       Simulate large transactions
+                    --type TYPE     many-rows|large-data|long-running|mixed
+                    --rows N        Number of rows (default: 1000)
+                    --size N        Data size in KB per row (default: 100)
+                    --duration N    Duration in seconds (default: 60)
+                    --data-type     text|blob (default: text)
 
   help              Show this help message
 

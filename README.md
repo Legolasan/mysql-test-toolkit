@@ -88,6 +88,24 @@ docker exec mysql-toolkit toolkit restore --file mysql-bin.000003.backup
 docker exec mysql-toolkit toolkit restore --all
 ```
 
+### Large Transactions
+```bash
+# Many rows in single transaction (10K rows)
+docker exec mysql-toolkit toolkit transaction --type many-rows --rows 10000
+
+# Large data per row (100 rows x 1MB each = 100MB transaction)
+docker exec mysql-toolkit toolkit transaction --type large-data --rows 100 --size 1024
+
+# Long-running transaction (held open for 5 minutes)
+docker exec mysql-toolkit toolkit transaction --type long-running --duration 300
+
+# Mixed: many rows + large data + held open
+docker exec mysql-toolkit toolkit transaction --type mixed --rows 500 --size 100 --duration 120
+
+# Large blob data instead of text
+docker exec mysql-toolkit toolkit transaction --type large-data --rows 50 --size 512 --data-type blob
+```
+
 ## Connection Details
 
 | Field | Value |
