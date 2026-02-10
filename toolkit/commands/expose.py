@@ -14,8 +14,7 @@ NGROK_CONFIG_FILE = f'{NGROK_CONFIG_DIR}/ngrok.yml'
 
 def is_ngrok_installed():
     """Check if ngrok is installed"""
-    result = subprocess.run(['which', 'ngrok'], capture_output=True)
-    return result.returncode == 0
+    return os.path.exists('/usr/local/bin/ngrok')
 
 
 def is_ngrok_configured():

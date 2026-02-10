@@ -15,8 +15,7 @@ CLOUDFLARE_CONFIG_DIR = '/root/.cloudflared'
 
 def is_installed(binary):
     """Check if a binary is installed"""
-    result = subprocess.run(['which', binary], capture_output=True)
-    return result.returncode == 0
+    return os.path.exists(f'/usr/local/bin/{binary}')
 
 
 # ============== NGROK ==============
