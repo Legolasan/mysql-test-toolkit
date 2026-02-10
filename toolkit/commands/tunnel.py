@@ -80,8 +80,8 @@ def ngrok_stop():
 
 def cloudflare_is_running():
     """Check if cloudflared is running"""
-    result = subprocess.run(['pgrep', '-f', 'cloudflared'], capture_output=True)
-    return result.returncode == 0
+    result = subprocess.run(['ps', 'aux'], capture_output=True, text=True)
+    return 'cloudflared' in result.stdout
 
 
 def cloudflare_start_named_tunnel(token):
