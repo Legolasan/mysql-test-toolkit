@@ -22,7 +22,7 @@ import os
 TOOLKIT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, TOOLKIT_DIR)
 
-from commands import generate, monitor, corrupt, replicate, schema, restore, status, transaction, expose
+from commands import generate, monitor, corrupt, replicate, schema, restore, status, transaction, expose, tunnel
 
 
 COMMANDS = {
@@ -35,6 +35,7 @@ COMMANDS = {
     'restore': restore.run,
     'transaction': transaction.run,
     'expose': expose.run,
+    'tunnel': tunnel.run,
 }
 
 
@@ -82,11 +83,18 @@ Commands:
                     --duration N    Duration in seconds (default: 60)
                     --data-type     text|blob (default: text)
 
-  expose            Expose MySQL to internet via ngrok
+  expose            Expose MySQL to internet via ngrok (legacy)
                     --authtoken T   Ngrok authtoken (required on first use)
                     --port N        Port to expose (default: 3306)
                     --status        Show current tunnel status
                     --stop          Stop the ngrok tunnel
+
+  tunnel            Unified tunnel command (ngrok + Cloudflare)
+                    --provider P    ngrok|cloudflare
+                    --authtoken T   Ngrok authtoken
+                    --token T       Cloudflare tunnel token
+                    --status        Show all tunnel status
+                    --stop          Stop all tunnels
 
   help              Show this help message
 

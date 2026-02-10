@@ -21,6 +21,14 @@ RUN ARCH=$(uname -m) && \
     rm /tmp/ngrok.tgz && \
     chmod +x /usr/local/bin/ngrok
 
+# Install cloudflared (auto-detect architecture)
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then CF_ARCH="amd64"; \
+    elif [ "$ARCH" = "aarch64" ]; then CF_ARCH="arm64"; \
+    else CF_ARCH="amd64"; fi && \
+    curl -sLo /usr/local/bin/cloudflared "https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-${CF_ARCH}" && \
+    chmod +x /usr/local/bin/cloudflared
+
 # Set environment variables
 ENV MYSQL_ROOT_PASSWORD=rootpassword
 ENV MYSQL_DATABASE=testdb

@@ -106,20 +106,38 @@ docker exec mysql-toolkit toolkit transaction --type mixed --rows 500 --size 100
 docker exec mysql-toolkit toolkit transaction --type large-data --rows 50 --size 512 --data-type blob
 ```
 
-### Expose to Internet (ngrok)
+### Expose to Internet
+
+#### Option 1: Cloudflare Tunnel (Persistent URL - Recommended)
 ```bash
-# First time: configure with your ngrok authtoken
+# Requires: Cloudflare account + domain added to Cloudflare
+# 1. Go to https://one.dash.cloudflare.com/
+# 2. Navigate to Networks > Tunnels > Create tunnel
+# 3. Configure tunnel to point to tcp://localhost:3306
+# 4. Copy the tunnel token
+
+docker exec mysql-toolkit toolkit tunnel --provider cloudflare --token YOUR_TUNNEL_TOKEN
+
+# Your MySQL will be accessible at the hostname you configured
+# mysql -h your-hostname.yourdomain.com -P 3306 -uroot -prootpassword
+```
+
+#### Option 2: ngrok (Random URL)
+```bash
 # Get token from: https://dashboard.ngrok.com/get-started/your-authtoken
+docker exec mysql-toolkit toolkit tunnel --provider ngrok --authtoken YOUR_NGROK_TOKEN
+
+# Or use legacy expose command
 docker exec mysql-toolkit toolkit expose --authtoken YOUR_NGROK_TOKEN
+```
 
-# After configured, just expose
-docker exec mysql-toolkit toolkit expose
+#### Tunnel Management
+```bash
+# Check all tunnel status
+docker exec mysql-toolkit toolkit tunnel --status
 
-# Check tunnel status
-docker exec mysql-toolkit toolkit expose --status
-
-# Stop the tunnel
-docker exec mysql-toolkit toolkit expose --stop
+# Stop all tunnels
+docker exec mysql-toolkit toolkit tunnel --stop
 ```
 
 ## Connection Details
