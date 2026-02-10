@@ -22,7 +22,7 @@ import os
 TOOLKIT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, TOOLKIT_DIR)
 
-from commands import generate, monitor, corrupt, replicate, schema, restore, status, transaction, expose, tunnel
+from commands import generate, monitor, corrupt, replicate, schema, restore, status, transaction, expose, tunnel, network
 
 
 COMMANDS = {
@@ -36,6 +36,7 @@ COMMANDS = {
     'transaction': transaction.run,
     'expose': expose.run,
     'tunnel': tunnel.run,
+    'network': network.run,
 }
 
 
@@ -95,6 +96,16 @@ Commands:
                     --token T       Cloudflare tunnel token
                     --status        Show all tunnel status
                     --stop          Stop all tunnels
+
+  network           Simulate network failures for ETL testing
+                    --down          Bring connection down
+                    --up            Restore connection
+                    --type T        service|reject|timeout
+                    --duration N    Auto-restore after N seconds
+                    --flap          Flapping mode (toggle up/down)
+                    --slow          Enable latency injection
+                    --latency N     Latency in ms (default: 2000)
+                    --status        Show network status
 
   help              Show this help message
 

@@ -140,6 +140,41 @@ docker exec mysql-toolkit toolkit tunnel --status
 docker exec mysql-toolkit toolkit tunnel --stop
 ```
 
+### Network Simulation (ETL Resilience Testing)
+**Note:** Requires `--cap-add=NET_ADMIN` when running container.
+
+```bash
+# Run container with network capabilities
+docker run -d -p 3306:3306 --cap-add=NET_ADMIN --name mysql-toolkit arunsunderraj91/mysql-test-toolkit
+
+# Stop MySQL service
+docker exec mysql-toolkit toolkit network --down --type service
+
+# Block connections (connection refused)
+docker exec mysql-toolkit toolkit network --down --type reject
+
+# Block connections (timeout/hang)
+docker exec mysql-toolkit toolkit network --down --type timeout
+
+# Timed outage (auto-restore after 60s)
+docker exec mysql-toolkit toolkit network --down --type reject --duration 60
+
+# Flapping mode (toggle every 30s for 5 minutes)
+docker exec mysql-toolkit toolkit network --flap --interval 30 --duration 300
+
+# Add latency (2 seconds)
+docker exec mysql-toolkit toolkit network --slow --latency 2000
+
+# Remove latency
+docker exec mysql-toolkit toolkit network --slow --off
+
+# Restore all connections
+docker exec mysql-toolkit toolkit network --up
+
+# Check status
+docker exec mysql-toolkit toolkit network --status
+```
+
 ## Connection Details
 
 ### Admin User

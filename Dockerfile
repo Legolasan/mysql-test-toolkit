@@ -11,6 +11,10 @@ LABEL version="1.0.0"
 RUN microdnf install -y python3 python3-pip curl unzip && \
     microdnf clean all
 
+# Install network tools for simulation (iptables, tc, procps)
+RUN microdnf install -y iptables iproute-tc procps-ng && \
+    microdnf clean all
+
 # Install ngrok (auto-detect architecture)
 RUN ARCH=$(uname -m) && \
     if [ "$ARCH" = "x86_64" ]; then NGROK_ARCH="amd64"; \
