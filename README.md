@@ -209,24 +209,6 @@ cd mysql_test_case
 docker build -t arunsunderraj91/mysql-test-toolkit .
 ```
 
-## Test Cases
-
-Formal test case documentation for ETL/CDC resilience testing is available in the `tests/` folder.
-
-```bash
-tests/
-├── README.md           # How to use test cases
-├── TEMPLATE.md         # Blank template for new tests
-├── results/            # Screenshots, logs, artifacts
-└── cases/
-    ├── TC-001-pipeline-restart-fix-now.md
-    ├── TC-002-binlog-corruption-recovery.md
-    ├── TC-003-network-timeout-handling.md
-    └── ...
-```
-
-See [tests/README.md](tests/README.md) for full documentation.
-
 ## License
 
 MIT

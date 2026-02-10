@@ -10,7 +10,10 @@ BINLOG_DIR = '/var/lib/mysql'
 
 
 def execute_sql(sql, database=None, raw=False):
-    """Execute SQL and return output"""
+    """Execute SQL and return output
+
+    Uses stdin for large queries to avoid 'Argument list too long' errors.
+    """
     db = database or MYSQL_DATABASE
     cmd = [
         'mysql',
@@ -18,12 +21,12 @@ def execute_sql(sql, database=None, raw=False):
         f'-p{MYSQL_PASSWORD}',
         '-h', MYSQL_HOST,
         db,
-        '-e', sql
     ]
     if raw:
-        cmd.insert(-2, '-N')  # No headers
+        cmd.append('-N')  # No headers
 
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    # Use stdin for SQL to handle large queries
+    result = subprocess.run(cmd, input=sql, capture_output=True, text=True)
     if result.returncode != 0:
         raise Exception(f"MySQL error: {result.stderr}")
     return result.stdout.strip()
