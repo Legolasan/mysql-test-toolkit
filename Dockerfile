@@ -7,9 +7,19 @@ LABEL maintainer="arunsunderraj91"
 LABEL description="MySQL Testing Toolkit for ETL/CDC testing"
 LABEL version="1.0.0"
 
-# Install Python
-RUN microdnf install -y python3 python3-pip && \
+# Install Python and dependencies
+RUN microdnf install -y python3 python3-pip curl unzip && \
     microdnf clean all
+
+# Install ngrok (auto-detect architecture)
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then NGROK_ARCH="amd64"; \
+    elif [ "$ARCH" = "aarch64" ]; then NGROK_ARCH="arm64"; \
+    else NGROK_ARCH="amd64"; fi && \
+    curl -sLo /tmp/ngrok.tgz "https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-${NGROK_ARCH}.tgz" && \
+    tar -xzf /tmp/ngrok.tgz -C /usr/local/bin && \
+    rm /tmp/ngrok.tgz && \
+    chmod +x /usr/local/bin/ngrok
 
 # Set environment variables
 ENV MYSQL_ROOT_PASSWORD=rootpassword

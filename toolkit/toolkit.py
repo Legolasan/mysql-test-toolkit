@@ -22,7 +22,7 @@ import os
 TOOLKIT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, TOOLKIT_DIR)
 
-from commands import generate, monitor, corrupt, replicate, schema, restore, status, transaction
+from commands import generate, monitor, corrupt, replicate, schema, restore, status, transaction, expose
 
 
 COMMANDS = {
@@ -34,6 +34,7 @@ COMMANDS = {
     'schema-change': schema.run,
     'restore': restore.run,
     'transaction': transaction.run,
+    'expose': expose.run,
 }
 
 
@@ -80,6 +81,12 @@ Commands:
                     --size N        Data size in KB per row (default: 100)
                     --duration N    Duration in seconds (default: 60)
                     --data-type     text|blob (default: text)
+
+  expose            Expose MySQL to internet via ngrok
+                    --authtoken T   Ngrok authtoken (required on first use)
+                    --port N        Port to expose (default: 3306)
+                    --status        Show current tunnel status
+                    --stop          Stop the ngrok tunnel
 
   help              Show this help message
 

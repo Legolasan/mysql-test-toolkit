@@ -106,6 +106,22 @@ docker exec mysql-toolkit toolkit transaction --type mixed --rows 500 --size 100
 docker exec mysql-toolkit toolkit transaction --type large-data --rows 50 --size 512 --data-type blob
 ```
 
+### Expose to Internet (ngrok)
+```bash
+# First time: configure with your ngrok authtoken
+# Get token from: https://dashboard.ngrok.com/get-started/your-authtoken
+docker exec mysql-toolkit toolkit expose --authtoken YOUR_NGROK_TOKEN
+
+# After configured, just expose
+docker exec mysql-toolkit toolkit expose
+
+# Check tunnel status
+docker exec mysql-toolkit toolkit expose --status
+
+# Stop the tunnel
+docker exec mysql-toolkit toolkit expose --stop
+```
+
 ## Connection Details
 
 | Field | Value |
