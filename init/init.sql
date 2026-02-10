@@ -28,3 +28,9 @@ CREATE TABLE _toolkit_meta (
 );
 
 INSERT INTO _toolkit_meta (key_name, value) VALUES ('version', '1.0.0');
+
+-- Create ETL/CDC user with replication permissions
+CREATE USER IF NOT EXISTS 'hevo'@'%' IDENTIFIED WITH mysql_native_password BY 'hevopassword';
+GRANT ALL PRIVILEGES ON testdb.* TO 'hevo'@'%';
+GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'hevo'@'%';
+FLUSH PRIVILEGES;

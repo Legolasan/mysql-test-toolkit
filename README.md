@@ -142,6 +142,7 @@ docker exec mysql-toolkit toolkit tunnel --stop
 
 ## Connection Details
 
+### Admin User
 | Field | Value |
 |-------|-------|
 | Host | localhost |
@@ -149,6 +150,14 @@ docker exec mysql-toolkit toolkit tunnel --stop
 | User | root |
 | Password | rootpassword |
 | Database | testdb |
+
+### ETL/CDC User (for Hevo, Fivetran, Airbyte, etc.)
+| Field | Value |
+|-------|-------|
+| User | hevo |
+| Password | hevopassword |
+| Database | testdb |
+| Permissions | ALL on testdb + REPLICATION SLAVE/CLIENT |
 
 ## Configuration
 
